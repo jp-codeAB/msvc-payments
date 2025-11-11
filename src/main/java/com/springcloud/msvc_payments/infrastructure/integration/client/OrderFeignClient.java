@@ -1,6 +1,5 @@
 package com.springcloud.msvc_payments.infrastructure.integration.client;
 
-
 import com.springcloud.msvc_payments.infrastructure.integration.config.FeignOkHttpConfig;
 import com.springcloud.msvc_payments.infrastructure.web.dto.response.OrderDetailsResponse;
 import com.springcloud.msvc_payments.infrastructure.web.dto.response.StatusUpdateNotification;
