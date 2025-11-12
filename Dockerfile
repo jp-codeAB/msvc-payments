@@ -1,11 +1,12 @@
 FROM gradle:8.10.2-jdk21 AS builder
 WORKDIR /app
 
-COPY build.gradle settings.gradle ./
+COPY build.gradle settings.gradle gradlew ./
 COPY gradle gradle
-COPY src src
+RUN ./gradlew dependencies --no-daemon
 
-RUN gradle clean build -x test --no-daemon
+COPY src src
+RUN ./gradlew clean build -x test --no-daemon
 
 FROM eclipse-temurin:21-jre
 WORKDIR /app
@@ -27,4 +28,7 @@ ENV SPRING_PROFILES_ACTIVE=dev \
     DB_USER=postgres \
     DB_PASS=100juanU
 
+HEALTHCHECK CMD curl -f http://localhost:8087/actuator/health || exit 1
+
 ENTRYPOINT ["java", "-jar", "app.jar"]
+
