@@ -1,4 +1,4 @@
-name: CI msvc-payments
+name: CI-msvc-payments
 
 on:
   push:

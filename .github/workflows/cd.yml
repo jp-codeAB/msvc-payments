@@ -1,8 +1,10 @@
-name: CD - msvc-payments
+name: CD-msvc-payments
 
 on:
-  push:
-    branches: [ "main" ]
+  workflow_run:
+    workflows: ["CI-msvc-payments"]
+    types:
+      - completed
 
 jobs:
   docker:

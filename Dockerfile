@@ -7,19 +7,24 @@ COPY src src
 
 RUN gradle clean build -x test --no-daemon
 
-FROM eclipse-temurin:21-jdk
+FROM eclipse-temurin:21-jre
 WORKDIR /app
 
 COPY --from=builder /app/build/libs/*.jar app.jar
 
 EXPOSE 8087
 
-ENV SPRING_PROFILES_ACTIVE=dev
-ENV RABBITMQ_HOST=rabbitmq
-ENV RABBITMQ_PORT=5672
-ENV RABBITMQ_USER=guest
-ENV RABBITMQ_PASS=guest
-ENV CONFIG_SERVER_URI=http://config-server:8888
-ENV EUREKA_URI=http://eureka-server:8761/eureka/
+ENV SPRING_PROFILES_ACTIVE=dev \
+    CONFIG_SERVER_URI=http://config-server:8888 \
+    EUREKA_URI=http://eureka-server:8761/eureka/ \
+    RABBITMQ_HOST=rabbitmq \
+    RABBITMQ_PORT=5672 \
+    RABBITMQ_USER=guest \
+    RABBITMQ_PASS=guest \
+    DB_HOST=postgres \
+    DB_PORT=5432 \
+    DB_NAME=paydb \
+    DB_USER=postgres \
+    DB_PASS=100juanU
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
